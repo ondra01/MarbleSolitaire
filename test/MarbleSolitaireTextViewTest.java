@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import cs3500.marblesolitaire.model.hw02.EnglishSolitaireModel;
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
+import cs3500.marblesolitaire.model.hw04.EuropeanSolitaireModel;
 import cs3500.marblesolitaire.view.MarbleSolitaireTextView;
 import cs3500.marblesolitaire.view.MarbleSolitaireView;
 
@@ -27,6 +28,12 @@ public class MarbleSolitaireTextViewTest {
   MarbleSolitaireView viewWithStringbuilderDestination;
   StringBuilder output;
 
+  //HW3 Code:
+  MarbleSolitaireModel europeanModel1;
+  MarbleSolitaireView europeanView1;
+  MarbleSolitaireModel europeanModel3;
+  MarbleSolitaireView europeanView3;
+
   @Before
   public void setUp() {
     //Models
@@ -42,6 +49,40 @@ public class MarbleSolitaireTextViewTest {
     //View
     view = new MarbleSolitaireTextView(model1);
     viewWithStringbuilderDestination = new MarbleSolitaireTextView(model1, output);
+
+    //HW3 Code:
+    europeanModel1 = new EuropeanSolitaireModel();
+    europeanView1 = new MarbleSolitaireTextView(europeanModel1);
+    europeanModel3 = new EuropeanSolitaireModel(5);
+    europeanView3 = new MarbleSolitaireTextView(europeanModel3);
+  }
+
+  @Test
+  public void testEuropeanInitialToString() {
+    assertEquals("    O O O\n" +
+            "  O O O O O\n" +
+            "O O O O O O O\n" +
+            "O O O _ O O O\n" +
+            "O O O O O O O\n" +
+            "  O O O O O\n" +
+            "    O O O", europeanView1.toString());
+  }
+
+  @Test
+  public void testEuropeanWithArmThickness5InitialToString() {
+    assertEquals("        O O O O O\n" +
+            "      O O O O O O O\n" +
+            "    O O O O O O O O O\n" +
+            "  O O O O O O O O O O O\n" +
+            "O O O O O O O O O O O O O\n" +
+            "O O O O O O O O O O O O O\n" +
+            "O O O O O O _ O O O O O O\n" +
+            "O O O O O O O O O O O O O\n" +
+            "O O O O O O O O O O O O O\n" +
+            "  O O O O O O O O O O O\n" +
+            "    O O O O O O O O O\n" +
+            "      O O O O O O O\n" +
+            "        O O O O O", europeanView3.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)

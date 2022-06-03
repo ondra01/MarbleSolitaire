@@ -2,7 +2,10 @@ package cs3500.marblesolitaire.model.hw04;
 
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 
-
+/**
+ * EuropeanSolitaireModel represents the data and operations that can be performed for a game of
+ * European solitaire.
+ */
 public class EuropeanSolitaireModel extends AbstractCartesianSolitaireModel
         implements MarbleSolitaireModel {
 
@@ -11,11 +14,6 @@ public class EuropeanSolitaireModel extends AbstractCartesianSolitaireModel
    */
   public EuropeanSolitaireModel() {
     super();
-  }
-
-  @Override
-  protected void setUpBoard() {
-
   }
 
   /**
@@ -60,6 +58,44 @@ public class EuropeanSolitaireModel extends AbstractCartesianSolitaireModel
   public EuropeanSolitaireModel(int armThickness, int sRow, int sCol)
           throws IllegalArgumentException {
     super(armThickness, sRow, sCol);
+  }
+
+  /**
+   * Initializes all Invalid and Marble SlotStates in board. NOTE no SlotState of the board is empty
+   * yet!
+   */
+  @Override
+  protected void setUpBoard() {
+    boardSize = (3 * armThickness) - 2;
+    board = new SlotState[boardSize][boardSize];
+    //For a European Solitaire Model the invalidDimension is a function of the armThickness and
+    //the row of the board.
+    int invalidDimension = 0;
+    if (armThickness == 1) {
+      invalidDimension = 1;
+    }
+
+    //Set the corner slots to invalid, and the rest of the board to marbles
+    for (int r = 0; r < board.length; r++) {
+      for (int c = 0; c < board.length; c++) {
+        //Determining invalidDimension
+        if (r < armThickness - 1) {
+          invalidDimension = armThickness - r - 1;
+        } else if (r >= armThickness - 1 && r < 2 * armThickness - 1) {
+          invalidDimension = 0;
+        } else if (r >= 2 * armThickness - 1) {
+          invalidDimension = (r + 2) - (2 * armThickness);
+        }
+
+        //old code
+        if (c < invalidDimension || (c >= boardSize - invalidDimension)) {
+          board[r][c] = SlotState.Invalid;
+        } else {
+          board[r][c] = SlotState.Marble;
+
+        }
+      }
+    }
   }
 
 }

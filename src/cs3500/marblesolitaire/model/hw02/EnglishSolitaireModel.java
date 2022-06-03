@@ -61,9 +61,10 @@ public class EnglishSolitaireModel extends AbstractCartesianSolitaireModel
   }
 
   /**
-   * Initializes all Invalid and Empty SlotStates in board. NOTE no SlotState of the board is empty
+   * Initializes all Invalid and Marble SlotStates in board. NOTE no SlotState of the board is empty
    * yet!
    */
+  @Override
   protected void setUpBoard() {
     boardSize = (3 * armThickness) - 2;
     board = new SlotState[boardSize][boardSize];
@@ -87,6 +88,5 @@ public class EnglishSolitaireModel extends AbstractCartesianSolitaireModel
       }
     }
   }
-
 
 }

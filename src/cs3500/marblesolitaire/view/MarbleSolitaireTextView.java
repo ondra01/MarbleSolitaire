@@ -11,10 +11,8 @@ import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelState;
  * by the relevant MarbleSolitaireModelState object. The view has access to public methods in this
  * interface which describe the model but do not allow mutation.
  */
-public class MarbleSolitaireTextView implements MarbleSolitaireView {
-  private final MarbleSolitaireModelState model;
-  private final Appendable destination;
-
+public class MarbleSolitaireTextView extends AbstractSolitaireTextView
+        implements MarbleSolitaireView {
   /**
    * Creates a new MarbleSolitaireTextView using a passed model which implements
    * MarbleSolitaireModelState and an Appendable destination to which to render the board.
@@ -22,18 +20,11 @@ public class MarbleSolitaireTextView implements MarbleSolitaireView {
    * @param model       is the model to be queried in order to display the game.
    * @param destination is the object that this view uses as its destination for transmitting the
    *                    state of the marble solitaire board.
-   * @throws IllegalArgumentException if the passed model is null.
+   * @throws IllegalArgumentException if the passed model or Appendable is null.
    */
   public MarbleSolitaireTextView(MarbleSolitaireModelState model, Appendable destination)
           throws IllegalArgumentException {
-    if (model == null) {
-      throw new IllegalArgumentException("Model Cannot be Null!");
-    } else if (destination == null) {
-      throw new IllegalArgumentException("Appendable Cannot be Null!");
-    } else {
-      this.model = model;
-      this.destination = destination;
-    }
+    super(model, destination);
   }
 
   /**
@@ -44,32 +35,7 @@ public class MarbleSolitaireTextView implements MarbleSolitaireView {
    * @throws IllegalArgumentException if the passed model is null.
    */
   public MarbleSolitaireTextView(MarbleSolitaireModelState model) throws IllegalArgumentException {
-    if (model == null) {
-      throw new IllegalArgumentException("Model Cannot be Null!");
-    } else {
-      this.model = model;
-      this.destination = System.out;
-    }
-  }
-
-  /**
-   * Return a string that represents the current state of the board. The
-   * string should have one line per row of the game board. Each slot on the
-   * game board is a single character (O, _ or space for a marble, empty and
-   * invalid position respectively). Slots in a row should be separated by a
-   * space. Each row has no space before the first slot and after the last slot.
-   *
-   * @return the game state as a string
-   */
-  @Override
-  public String toString() {
-    StringBuilder stringSoFar = new StringBuilder();
-    for (int row = 0; row < this.model.getBoardSize(); row++) {
-      stringSoFar.append(this.modelRowToString(row));
-    }
-    //Remove the last new line character
-    stringSoFar.deleteCharAt(stringSoFar.length() - 1);
-    return stringSoFar.toString();
+    super(model);
   }
 
   /**
@@ -78,7 +44,8 @@ public class MarbleSolitaireTextView implements MarbleSolitaireView {
    * @param row is the desired row of the board to represent.
    * @return a string representation of the desired row of the board contained in model.
    */
-  private String modelRowToString(int row) {
+  @Override
+  protected String modelRowToString(int row) {
     StringBuilder stringSoFar2 = new StringBuilder();
     for (int col = 0; col < this.model.getBoardSize(); col++) {
       //Marbles should be replaced with an uppercase O
@@ -114,27 +81,5 @@ public class MarbleSolitaireTextView implements MarbleSolitaireView {
     }
     stringSoFar2.append("\n");
     return stringSoFar2.toString();
-  }
-
-  /**
-   * Render the board to the provided data destination. The board should be rendered exactly
-   * in the format produced by the toString method above
-   *
-   * @throws IOException if transmission of the board to the provided data destination fails
-   */
-  @Override
-  public void renderBoard() throws IOException {
-    this.destination.append(this.toString());
-  }
-
-  /**
-   * Render a specific message to the provided data destination.
-   *
-   * @param message the message to be transmitted
-   * @throws IOException if transmission of the board to the provided data destination fails
-   */
-  @Override
-  public void renderMessage(String message) throws IOException {
-    this.destination.append(message);
   }
 }
