@@ -1,19 +1,21 @@
-package cs3500.marblesolitaire.model.hw02;
+package cs3500.marblesolitaire.model.hw04;
 
-import cs3500.marblesolitaire.model.hw04.AbstractCartesianSolitaireModel;
+import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 
-/**
- * EnglishSolitaireModel represents the data and operations that can be performed for a game of
- * English solitaire.
- */
-public class EnglishSolitaireModel extends AbstractCartesianSolitaireModel
-        implements MarbleSolitaireModel{
+
+public class EuropeanSolitaireModel extends AbstractCartesianSolitaireModel
+        implements MarbleSolitaireModel {
 
   /**
    * Initializes the game board with arm thickness 3 and the empty slot at the center.
    */
-  public EnglishSolitaireModel() {
+  public EuropeanSolitaireModel() {
     super();
+  }
+
+  @Override
+  protected void setUpBoard() {
+
   }
 
   /**
@@ -24,7 +26,7 @@ public class EnglishSolitaireModel extends AbstractCartesianSolitaireModel
    *                     or right columns).
    * @throws IllegalArgumentException if the arm thickness is not a positive odd number.
    */
-  public EnglishSolitaireModel(int armThickness) throws IllegalArgumentException {
+  public EuropeanSolitaireModel(int armThickness) throws IllegalArgumentException {
     super(armThickness);
   }
 
@@ -38,7 +40,7 @@ public class EnglishSolitaireModel extends AbstractCartesianSolitaireModel
    * @param sCol specifies the column position of the empty slot.
    * @throws IllegalArgumentException if the specified position of the empty slot is invalid.
    */
-  public EnglishSolitaireModel(int sRow, int sCol) throws IllegalArgumentException {
+  public EuropeanSolitaireModel(int sRow, int sCol) throws IllegalArgumentException {
     super(sRow, sCol);
   }
 
@@ -55,38 +57,9 @@ public class EnglishSolitaireModel extends AbstractCartesianSolitaireModel
    * @param sCol         specifies the column position of the empty slot.
    * @throws IllegalArgumentException if the specified position of the empty slot is invalid.
    */
-  public EnglishSolitaireModel(int armThickness, int sRow, int sCol)
+  public EuropeanSolitaireModel(int armThickness, int sRow, int sCol)
           throws IllegalArgumentException {
     super(armThickness, sRow, sCol);
   }
-
-  /**
-   * Initializes all Invalid and Empty SlotStates in board. NOTE no SlotState of the board is empty
-   * yet!
-   */
-  protected void setUpBoard() {
-    boardSize = (3 * armThickness) - 2;
-    board = new SlotState[boardSize][boardSize];
-    int invalidDimension;
-    if (armThickness == 1) {
-      invalidDimension = 1;
-    } else {
-      invalidDimension = (this.armThickness - 1);
-    }
-
-    //Set the corner slots to invalid, and the rest of the board to marbles
-    for (int r = 0; r < board.length; r++) {
-      for (int c = 0; c < board.length; c++) {
-        if ((r < invalidDimension || r >= armThickness + invalidDimension)
-                && (c < invalidDimension || c >= armThickness + invalidDimension)) {
-          board[r][c] = SlotState.Invalid;
-        } else {
-          board[r][c] = SlotState.Marble;
-
-        }
-      }
-    }
-  }
-
 
 }
