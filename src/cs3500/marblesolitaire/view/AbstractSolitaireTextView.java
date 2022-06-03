@@ -4,6 +4,10 @@ import java.io.IOException;
 
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelState;
 
+/**
+ * Represents the abstraction of common data and operations which all MarbleSolitaireViews have
+ * in common.
+ */
 public abstract class AbstractSolitaireTextView implements MarbleSolitaireView {
   protected final MarbleSolitaireModelState model;
   protected final Appendable destination;
@@ -88,5 +92,41 @@ public abstract class AbstractSolitaireTextView implements MarbleSolitaireView {
   @Override
   public void renderMessage(String message) throws IOException {
     this.destination.append(message);
+  }
+
+  protected void validSlotsToStringOfRow(int row, StringBuilder stringSoFar2) {
+    for (int col = 0; col < this.model.getBoardSize(); col++) {
+      //Marbles should be replaced with an uppercase O
+      if (this.model.getSlotAt(row, col) == MarbleSolitaireModelState.SlotState.Marble) {
+        stringSoFar2.append("O");
+        //Add a space if this is not the last column
+        if (col < this.model.getBoardSize() - 1) {
+          stringSoFar2.append(" ");
+        }
+      } else if (this.model.getSlotAt(row, col) == MarbleSolitaireModelState.SlotState.Empty) {
+        //Empty should be replaced with an _
+        stringSoFar2.append("_");
+        //Add a space if this is not the last column
+        if (col < this.model.getBoardSize() - 1) {
+          stringSoFar2.append(" ");
+        }
+      }
+      //If this is an invalid and the previous SlotState was a marble or an empty then return the
+      //string as is with a new line
+      else if (this.model.getSlotAt(row, col) == MarbleSolitaireModelState.SlotState.Invalid) {
+        if ((col - 1 >= 0) && (model.getSlotAt(row, col - 1)
+                == MarbleSolitaireModelState.SlotState.Marble
+                || model.getSlotAt(row, col - 1)
+                == MarbleSolitaireModelState.SlotState.Empty)) {
+          //Remove the space after the last marble or empty
+          stringSoFar2.deleteCharAt(stringSoFar2.length() - 1);
+          stringSoFar2.append("\n");
+          return;
+        } else {
+          stringSoFar2.append("  ");
+        }
+      }
+    }
+    return;
   }
 }

@@ -2,6 +2,10 @@ package cs3500.marblesolitaire.model.hw04;
 
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 
+/**
+ * TriangleSolitaireModel represents the data and operations that can be performed for a game of
+ * Triangle solitaire.
+ */
 public class TriangleSolitaireModel extends AbstractSolitaireModel implements MarbleSolitaireModel {
 
   /**

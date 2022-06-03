@@ -2,6 +2,7 @@ package cs3500.marblesolitaire.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
@@ -103,24 +104,29 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
       //3) If the game is ongoing, the next user input is obtained from the Readable object.
       while (coordinates.size() < 4) {
         //If the next input is an int then add it as a coordinate
-        if (sc.hasNextInt()) {
-          coordinates.add(sc.nextInt() - 1); //User board dimensions start at 1 and not 0
-        } else {
-          //Check if it is the letter q
-          String userInput = sc.next();
-          if (userInput.equalsIgnoreCase("q")) {
-            gameOver = true;
-            this.gameHasBeenQuit();
-            return;
+        try {
+          if (sc.hasNextInt()) {
+            coordinates.add(sc.nextInt() - 1); //User board dimensions start at 1 and not 0
+          } else {
+            //Check if it is the letter q
+            String userInput = sc.next();
+            if (userInput.equalsIgnoreCase("q")) {
+              gameOver = true;
+              this.gameHasBeenQuit();
+              return;
+            }
+            //Otherwise, render that the userInput is invalid and ask for new input, and loop.
+            try {
+              this.view.renderMessage("Invalid User Input = \"" + userInput + "\". Please input a "
+                      + "positive integer coordinate, or the letter \"q\" to quit the game. \n");
+            } catch (IOException e) {
+              throw new IllegalStateException("IOException thrown when attempting to render invalid"
+                      + "user input message!");
+            }
           }
-          //Otherwise, render that the userInput is invalid and ask for new input, and loop.
-          try {
-            this.view.renderMessage("Invalid User Input = \"" + userInput + "\". Please input a "
-                    + "positive integer coordinate, or the letter \"q\" to quit the game. \n");
-          } catch (IOException e) {
-            throw new IllegalStateException("IOException thrown when attempting to render invalid"
-                    + "user input message!");
-          }
+        } catch (NoSuchElementException e) {
+          throw new IllegalStateException("NoSuchElementException thrown when attempting to get "
+                  + "next input from readable!");
         }
       }
       //Coordinates have been obtained, attempt a move!

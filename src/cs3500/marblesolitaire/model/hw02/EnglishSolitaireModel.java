@@ -7,7 +7,7 @@ import cs3500.marblesolitaire.model.hw04.AbstractCartesianSolitaireModel;
  * English solitaire.
  */
 public class EnglishSolitaireModel extends AbstractCartesianSolitaireModel
-        implements MarbleSolitaireModel{
+        implements MarbleSolitaireModel {
 
   /**
    * Initializes the game board with arm thickness 3 and the empty slot at the center.

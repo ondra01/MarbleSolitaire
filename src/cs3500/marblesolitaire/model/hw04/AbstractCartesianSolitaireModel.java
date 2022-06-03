@@ -2,6 +2,11 @@ package cs3500.marblesolitaire.model.hw04;
 
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 
+/**
+ * Represents a MarbleSolitaireModel whose board is rectilinear. Meaning that the board has
+ * cartesian coordinates. This abstract class allows for the abstraction of many operations/methods
+ * which all cartesian MarbleSolitaireModels have in common.
+ */
 public abstract class AbstractCartesianSolitaireModel extends AbstractSolitaireModel
         implements MarbleSolitaireModel {
 

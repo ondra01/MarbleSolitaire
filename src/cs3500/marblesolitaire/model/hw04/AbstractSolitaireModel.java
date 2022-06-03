@@ -2,6 +2,10 @@ package cs3500.marblesolitaire.model.hw04;
 
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 
+/**
+ * Represents the abstraction of common data and operations which all MarbleSolitaireModels have
+ * in common.
+ */
 public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
   protected int armThickness;
   protected SlotState[][] board;
