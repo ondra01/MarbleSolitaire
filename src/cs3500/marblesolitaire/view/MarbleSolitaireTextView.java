@@ -45,40 +45,9 @@ public class MarbleSolitaireTextView extends AbstractSolitaireTextView
   @Override
   protected String modelRowToString(int row) {
     StringBuilder stringSoFar2 = new StringBuilder();
-//    for (int col = 0; col < this.model.getBoardSize(); col++) {
-//      //Marbles should be replaced with an uppercase O
-//      if (this.model.getSlotAt(row, col) == MarbleSolitaireModelState.SlotState.Marble) {
-//        stringSoFar2.append("O");
-//        //Add a space if this is not the last column
-//        if (col < this.model.getBoardSize() - 1) {
-//          stringSoFar2.append(" ");
-//        }
-//      } else if (this.model.getSlotAt(row, col) == MarbleSolitaireModelState.SlotState.Empty) {
-//        //Empty should be replaced with an _
-//        stringSoFar2.append("_");
-//        //Add a space if this is not the last column
-//        if (col < this.model.getBoardSize() - 1) {
-//          stringSoFar2.append(" ");
-//        }
-//      }
-//      //If this is an invalid and the previous SlotState was a marble or an empty then return the
-//      //string as is with a new line
-//      else if (this.model.getSlotAt(row, col) == MarbleSolitaireModelState.SlotState.Invalid) {
-//        if ((col - 1 >= 0) && (model.getSlotAt(row, col - 1)
-//                == MarbleSolitaireModelState.SlotState.Marble
-//                || model.getSlotAt(row, col - 1)
-//                == MarbleSolitaireModelState.SlotState.Empty)) {
-//          //Remove the space after the last marble or empty
-//          stringSoFar2.deleteCharAt(stringSoFar2.length() - 1);
-//          stringSoFar2.append("\n");
-//          return stringSoFar2.toString();
-//        } else {
-//          stringSoFar2.append("  ");
-//        }
-//      }
-//    }
+
     this.validSlotsToStringOfRow(row, stringSoFar2);
-    if (this.model.getSlotAt(row, this.model.getBoardSize()- 1)
+    if (this.model.getSlotAt(row, this.model.getBoardSize() - 1)
             != MarbleSolitaireModelState.SlotState.Invalid) {
       stringSoFar2.append("\n");
     }

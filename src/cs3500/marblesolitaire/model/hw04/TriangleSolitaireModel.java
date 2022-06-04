@@ -102,13 +102,18 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel implements Ma
   @Override
   protected boolean marbleCanJumpUp(int r, int c) {
     //Check if diagonal up right jump is possible
-    if (((r - 2) < boardSize) && board[r - 2][c] == SlotState.Empty
-            && board[r - 1][c] == SlotState.Marble) {
-      return true;
+    try {
+      if (((r - 2) < boardSize) && board[r - 2][c] == SlotState.Empty
+              && board[r - 1][c] == SlotState.Marble) {
+        return true;
+      }
+      //Check if diagonal up left jump is possible and if not then return false
+      return ((r - 2) < boardSize) && ((c - 2) < boardSize)
+              && board[r - 2][c - 2] == SlotState.Empty
+              && board[r - 1][c - 1] == SlotState.Marble;
+    } catch (ArrayIndexOutOfBoundsException e) {
+      return false;
     }
-    //Check if diagonal up left jump is possible and if not then return false
-    return ((r - 2) < boardSize) && ((c - 2) < boardSize) && board[r - 2][c - 2] == SlotState.Empty
-            && board[r - 1][c - 1] == SlotState.Marble;
   }
 
   /**
@@ -120,14 +125,20 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel implements Ma
    */
   @Override
   protected boolean marbleCanJumpDown(int r, int c) {
-    //Check if diagonal down left jump is possible
-    if (((r + 2) < boardSize) && board[r + 2][c] == SlotState.Empty
-            && board[r + 1][c] == SlotState.Marble) {
-      return true;
+    try {
+      //Check if diagonal down left jump is possible
+      if (((r + 2) < boardSize) && board[r + 2][c] == SlotState.Empty
+              && board[r + 1][c] == SlotState.Marble) {
+        return true;
+      }
+      //Check if diagonal down right jump is possible and if not then return false
+      return ((r + 2) < boardSize) && ((c + 2) < boardSize)
+              && board[r + 2][c + 2] == SlotState.Empty
+              && board[r + 1][c + 1] == SlotState.Marble;
+    } catch (ArrayIndexOutOfBoundsException e) {
+      return false;
     }
-    //Check if diagonal down right jump is possible and if not then return false
-    return ((r + 2) < boardSize) && ((c + 2) < boardSize) && board[r + 2][c + 2] == SlotState.Empty
-            && board[r + 1][c + 1] == SlotState.Marble;
+
   }
 
   @Override
@@ -192,4 +203,36 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel implements Ma
       throw new IllegalArgumentException("The desired move is not possible");
     }
   }
+  /*
+  /**
+   * Determines if there is a marble in the slot between the ''to" and ''from" positions.
+   *
+   * @param fromRow the row number of the position to be moved from
+   *                (starts at 0)
+   * @param fromCol the column number of the position to be moved from
+   *                (starts at 0)
+   * @param toRow   the row number of the position to be moved to
+   *                (starts at 0)
+   * @param toCol   the column number of the position to be moved to
+   *                (starts at 0)
+   * @return true if there is a marble in the slot between the ''to" and ''from" positions, and
+   * false otherwise.
+
+  protected boolean isMarbleBetweenFromAndTo(int fromRow, int fromCol, int toRow, int toCol) {
+    try {
+      return ((destIsTwoPositionsRight(fromRow, fromCol, toRow, toCol)
+              && board[fromRow][fromCol + 1] == SlotState.Marble)
+              || (destIsTwoPositionsLeft(fromRow, fromCol, toRow, toCol)
+              && board[fromRow][fromCol - 1] == SlotState.Marble)
+              || (destIsTwoPositionsUp(fromRow, fromCol, toRow, toCol)
+              && (board[fromRow - 1][fromCol] == SlotState.Marble)
+              || (board[fromRow - 1][fromCol - 1] == SlotState.Marble))
+              || (destIsTwoPositionsDown(fromRow, fromCol, toRow, toCol)
+              && (board[fromRow + 1][fromCol] == SlotState.Marble)
+              || (board[fromRow + 1][fromCol + 1] == SlotState.Marble)));
+    } catch (ArrayIndexOutOfBoundsException e) {
+      return false;
+    }
+  }
+  */
 }
